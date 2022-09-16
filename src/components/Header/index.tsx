@@ -20,7 +20,7 @@ export function Header() {
         <div>
           <div>
             <Title>{user.name}</Title>
-            <Link>GITHUB</Link>
+            <Link to={user.html_url}>GITHUB</Link>
           </div>
 
           <About>{user.bio}</About>

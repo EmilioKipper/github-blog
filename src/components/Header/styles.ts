@@ -22,6 +22,12 @@ export const Card = styled.div`
     min-height: 148px;
     justify-content: space-between;
     width: 100%;
+
+    > div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
   }
 
   display: flex;

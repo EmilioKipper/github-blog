@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useEffect, useState } from 'react'
-import { getUser } from '../service'
+import { getIssues, getUser } from '../service'
 
 interface UserContextProviderProps {
   children: ReactNode
@@ -40,20 +40,42 @@ interface UserProps {
   url: string
 }
 
+interface IssuesProps {
+  title: string
+  body: string
+  html_url: string
+  id: number
+  user: UserProps
+  updated_at: string
+  comments: number
+}
+
 interface UserContextProps {
   user: UserProps
+  issues: {
+    items: IssuesProps[]
+    total: number
+  }
 }
 
 export const UserContext = createContext({} as UserContextProps)
 
 export function UserContextProvider({ children }: UserContextProviderProps) {
   const [user, setUser] = useState({} as UserProps)
+  const [issues, setIssues] = useState([] as IssuesProps[])
+  const [total, setTotal] = useState(0)
 
   useEffect(() => {
     getUser('EmilioKipper').then((res) => setUser(res.data))
+    getIssues().then((res) => {
+      setIssues(res.data.items)
+      setTotal(res.data.total_count)
+    })
   }, [])
 
   return (
-    <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{ user, issues: { items: issues, total } }}>
+      {children}
+    </UserContext.Provider>
   )
 }

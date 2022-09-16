@@ -21,4 +21,9 @@ export const Search = styled.div`
   }
 `
 
-export const List = styled.div``
+export const List = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 20px;
+`
