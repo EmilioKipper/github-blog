@@ -12,7 +12,7 @@ interface LinkProps {
 export function Link({ children, to = '/' }: LinkProps) {
   return (
     <Container>
-      {to ? (
+      {to !== '/' ? (
         <a href={to} target="_blank" rel="noreferrer">
           {children}
         </a>
