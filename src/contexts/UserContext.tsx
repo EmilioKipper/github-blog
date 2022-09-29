@@ -56,6 +56,7 @@ interface UserContextProps {
     items: IssuesProps[]
     total: number
   }
+  searchPost: (search: string) => void
 }
 
 export const UserContext = createContext({} as UserContextProps)
@@ -73,8 +74,21 @@ export function UserContextProvider({ children }: UserContextProviderProps) {
     })
   }, [])
 
+  function handleSearch(searchTerm: string) {
+    getIssues(searchTerm).then((res) => {
+      setIssues(res.data.items)
+      setTotal(res.data.total_count)
+    })
+  }
+
   return (
-    <UserContext.Provider value={{ user, issues: { items: issues, total } }}>
+    <UserContext.Provider
+      value={{
+        user,
+        issues: { items: issues, total },
+        searchPost: handleSearch,
+      }}
+    >
       {children}
     </UserContext.Provider>
   )
